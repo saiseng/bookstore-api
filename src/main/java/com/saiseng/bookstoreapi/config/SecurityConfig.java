@@ -15,13 +15,15 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests((authz) -> authz.anyRequest().authenticated()).httpBasic(withDefaults());
+		http.csrf().disable()
+				.authorizeHttpRequests((authz) -> authz.anyRequest().authenticated())
+				.httpBasic(withDefaults());
 		return http.build();
 		// check for role for /book/delete
 	}
 
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.ignoring().antMatchers("/book/add", "/book/update", "/book/find-by-author", "/book/find-by-title", "/book/find-all");
+		return (web) -> web.ignoring().antMatchers("/book/add", "/book/update", "/book/find-by-author", "/book/find-by-title", "/book/find-all","/swagger-ui/**","/v3/**");
 	}
 }

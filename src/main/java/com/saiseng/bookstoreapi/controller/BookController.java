@@ -4,18 +4,18 @@ import com.saiseng.bookstoreapi.dao.BookService;
 import com.saiseng.bookstoreapi.dto.*;
 import com.saiseng.bookstoreapi.model.Author;
 import com.saiseng.bookstoreapi.model.Book;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/book",
-		method = {RequestMethod.POST, RequestMethod.GET})
+@RequestMapping(path = "/book")
 
 public class BookController {
 	private static final Logger logger = LoggerFactory.getLogger(BookController.class);
@@ -187,8 +187,8 @@ public class BookController {
 	}
 
 
-
-	@PostMapping("/delete")
+	@DeleteMapping("/delete")
+	@Operation(security = @SecurityRequirement(name = "basicAuthOpenAPI"))
 	public RespDeleteBook deleteBook(@RequestBody ReqDeleteBook req) {
 		// only authenticated user can delete, handle under security
 
